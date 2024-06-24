@@ -16,6 +16,7 @@ exports.crearGrupo = async (req, res) => {
     req.sanitizeBody('nombre')
     req.sanitizeBody('url')
 
+    // Extraer los campos del formulario
     const grupo = req.body
     // Almacena el usuario autenticado como el creador del grupo
     grupo.usuarioId = req.user.id
