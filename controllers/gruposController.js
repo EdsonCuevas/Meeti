@@ -3,6 +3,8 @@ const Grupos = require('../models/Grupos')
 const multer = require('multer')
 const shortid = require('shortid')
 
+const fs = require('fs')
+
 const configuracionMulter = {
     limits: { fileSize: 100000 },
     storage: fileStorage = multer.diskStorage({
@@ -122,6 +124,48 @@ exports.editarGrupo = async (req, res, next) => {
     grupo.url = url
 
     //guardar en la bd
+    await grupo.save()
+    req.flash('exito', 'Cambios Almacenados Correctamente')
+    res.redirect('/administracion')
+}
+
+exports.formEditarImagen = async (req, res) => {
+    const grupo = await Grupos.findOne({ where: { id: req.params.grupoId, usuarioId: req.user.id } })
+
+    res.render('imagen-grupo', {
+        nombrePagina: `Editar Imagen Grupo : ${grupo.nombre}`,
+        grupo
+    })
+}
+
+// Modifica la imagen en la bd y elimina la anterior
+exports.editarImagen = async (req, res, next) => {
+    const grupo = await Grupos.findOne({ where: { id: req.params.grupoId, usuarioId: req.user.id } })
+
+    // el grupo existe y el valido
+    if (!grupo) {
+        req.flash('error', 'Operación no válida')
+        res.redirect('/iniciar-sesion')
+        return next()
+    }
+
+    // Si hay imagen anterior y nueva, se debe borrar la anterior
+    if (req.file && grupo.imagen) {
+        const imagenAnteriorPath = __dirname + `/../public/uploads/grupos/${grupo.imagen}`
+
+        // Eliminar archivo con filesystem
+        fs.unlink(imagenAnteriorPath, (error) => {
+            if (error) {
+                console.log(error)
+            }
+            return
+        })
+    }
+
+    // Si hay una imagen nueva, la guardamos
+    if (req.file) {
+        grupo.imagen = req.file.filename
+    }
     await grupo.save()
     req.flash('exito', 'Cambios Almacenados Correctamente')
     res.redirect('/administracion')
