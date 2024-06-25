@@ -57,5 +57,15 @@ module.exports = function () {
         gruposController.editarImagen
     )
 
+    // Eliminar Grupos
+    router.get('/eliminar-grupo/:grupoId',
+        authController.usuarioAutenticado,
+        gruposController.formEliminarGrupo
+    )
+    router.post('/eliminar-grupo/:grupoId',
+        authController.usuarioAutenticado,
+        gruposController.eliminarGrupo
+    )
+
     return router
 }
