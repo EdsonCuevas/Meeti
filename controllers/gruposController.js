@@ -104,7 +104,25 @@ exports.formEditarGrupo = async (req, res) => {
 
 exports.editarGrupo = async (req, res, next) => {
 
-    const grupo = await Grupos.findByPk(req.params.grupoId)
-    const nuevoGrupo = req.body
+    const grupo = await Grupos.findOne({ where: { id: req.params.grupoId, usuarioId: req.user.id } })
 
+    // si no existe ese grupo o no es el dueño
+    if (!grupo) {
+        req.flash('error', 'Operación no válida')
+        res.redirect('/administracion')
+        return next()
+    }
+
+    const { nombre, descripcion, categoria, url } = req.body
+
+    //asignar los valores
+    grupo.nombre = nombre
+    grupo.descripcion = descripcion
+    grupo.categoriaId = categoria
+    grupo.url = url
+
+    //guardar en la bd
+    await grupo.save()
+    req.flash('exito', 'Cambios Almacenados Correctamente')
+    res.redirect('/administracion')
 }
