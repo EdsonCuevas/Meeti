@@ -3,16 +3,24 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./index.js"
+    "dev": "nodemon ./index.js",
+    "start": "concurrently \"npm run dev\" \"npm run watch\" ",
+    "watch": "webpack --watch --mode development"
   },
   "author": "Edson Felix",
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "nodemon": "^3.1.4"
+    "@babel/core": "^7.24.7",
+    "@babel/preset-env": "^7.24.7",
+    "babel-loader": "^9.1.3",
+    "nodemon": "^3.1.4",
+    "webpack": "^5.92.1",
+    "webpack-cli": "^5.1.4"
   },
   "dependencies": {
     "bcrypt-nodejs": "^0.0.3",
+    "concurrently": "^8.2.2",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.4.5",
