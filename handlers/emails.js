@@ -14,7 +14,6 @@ let transport = nodemailer.createTransport({
 })
 
 exports.enviarEmail = async (opciones) => {
-    console.log(opciones)
 
     // Leer el archivo para el email
     const archivo = __dirname + `/../views/emails/${opciones.archivo}.ejs`
