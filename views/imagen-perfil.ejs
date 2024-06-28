@@ -4,14 +4,15 @@
     </h1>
 
     <form method="post" class="default-form" enctype="multipart/form-data">
+        <legend>Sube tu imagen que se mostrará junto a tu nombre y biografia</legend>
         <div class="campo">
             <label>Imagen</label>
             <input type="file" name="imagen">
         </div>
-        <% if(grupo.imagen) { %>
+        <% if(usuario.imagen) { %>
             <div class="campo">
                 <label>Imagen Actual</label>
-                <img src="/uploads/grupos/<%= grupo.imagen %>" width="400">
+                <img src="/uploads/perfiles/<%= usuario.imagen %>" width="400">
             </div>
             <% } %>
                 <div class="enviar">

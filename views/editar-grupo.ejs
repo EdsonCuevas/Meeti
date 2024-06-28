@@ -20,7 +20,7 @@
             <select name="categoria">
                 <option value="" selected disabled>-- Elige una categoria --</option>
                 <% categorias.forEach(categoria=> { %>
-                    <option value="<%= categoria.id %>" <%= (grupo.categoriaId === categoria.id ) ? 'selected' : '' %> >
+                    <option value="<%= categoria.id %>" <%=(grupo.categoriaId===categoria.id ) ? 'selected' : '' %> >
                         <%= categoria.nombre %>
                     </option>
                     <% }) %>
@@ -30,7 +30,7 @@
             <label>Sitio Web</label>
             <input type="url" name="url" placeholder="Sitio Web" value="<%= grupo.url %>">
         </div>
-        <div class="campo enviar">
+        <div class="enviar">
             <input type="submit" value="Guardar Cambios" class="btn btn-rosa">
         </div>
     </form>

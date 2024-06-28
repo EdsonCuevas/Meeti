@@ -99,5 +99,36 @@ module.exports = function () {
         meetiController.eliminarMeeti
     )
 
+    // Editar Info Perfil
+    router.get('/editar-perfil',
+        authController.usuarioAutenticado,
+        usuariosController.formEditarPerfil
+    )
+    router.post('/editar-perfil',
+        authController.usuarioAutenticado,
+        usuariosController.editarPerfil
+    )
+
+    // Cambiar Password
+    router.get('/cambiar-password',
+        authController.usuarioAutenticado,
+        usuariosController.formCambiarPassword
+    )
+    router.post('/cambiar-password',
+        authController.usuarioAutenticado,
+        usuariosController.cambiarPassword
+    )
+
+    // Imagen Perfil
+    router.get('/imagen-perfil',
+        authController.usuarioAutenticado,
+        usuariosController.formSubirImagenPerfil
+    )
+    router.post('/imagen-perfil',
+        authController.usuarioAutenticado,
+        usuariosController.subirImagen,
+        usuariosController.guardarImagenPerfil
+    )
+
     return router
 }
