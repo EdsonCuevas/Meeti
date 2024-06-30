@@ -1,6 +1,8 @@
 <div class="card">
     <% if(meeti.grupo.imagen) { %>
-        <img src="/uploads/grupos/<%= meeti.grupo.imagen %>">
+        <a href="/meeti/<%= meeti.slug %>">
+            <img src="/uploads/grupos/<%= meeti.grupo.imagen %>">
+        </a>
         <% } else { %>
             <img src="/img/meeti.jpg">
             <% } %>
