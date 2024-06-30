@@ -50,3 +50,22 @@ exports.confirmarAsistencia = async (req, res) => {
     }
 
 }
+
+// Muestra el listado de asistentes
+exports.mostrarAsistentes = async (req, res) => {
+    const meeti = await Meeti.findOne({ where: { slug: req.params.slug }, atrributes: ['interesados'] })
+
+    // extraer interesados
+    const { interesados } = meeti
+
+    const asistentes = await Usuarios.findAll({
+        atrributes: ['nombre', 'imagen'],
+        where: { id: interesados }
+    })
+
+    // pasar los datos a la vista
+    res.render('asistentes-meeti', {
+        nombrePagina: 'Listado de Asistentes',
+        asistentes
+    })
+}
