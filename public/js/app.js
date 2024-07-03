@@ -69,7 +69,6 @@ function buscarDireccion(e) {
             geocodeService.reverse().latlng(resultado[0].bounds[0], 15).run(function (error, result) {
                 llenarInputs(result);
 
-                // console.log(resultado);
                 // mostrar el mapa
                 map.setView(resultado[0].bounds[0], 15);
 

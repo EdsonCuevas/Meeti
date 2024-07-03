@@ -125,5 +125,4 @@ exports.mostrarCategoria = async (req, res, next) => {
         moment
     })
 
-    console.log(categoria.id)
 }

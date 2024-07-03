@@ -8,6 +8,7 @@ const adminController = require('../controllers/adminController')
 const gruposController = require('../controllers/gruposController')
 const meetiController = require('../controllers/meetiController')
 const meetiControllerFE = require('../controllers/frontend/meetiControllerFE')
+const busquedaControllerFE = require('../controllers/frontend/busquedaControllerFE')
 const comentariosControllerFE = require('../controllers/frontend/comentariosControllerFE')
 const usuariosControllerFe = require('../controllers/frontend/usuariosControllerFe')
 const gruposControllerFe = require('../controllers/frontend/gruposControllerFe')
@@ -51,6 +52,11 @@ module.exports = function () {
     // Muestra las categorias
     router.get('/categoria/:slug',
         meetiControllerFE.mostrarCategoria
+    )
+
+    // Añade la busqueda
+    router.get('/busqueda',
+        busquedaControllerFE.resultadosBusqueda
     )
 
     // Crear y confirmar cuentas
