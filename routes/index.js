@@ -8,6 +8,8 @@ const adminController = require('../controllers/adminController')
 const gruposController = require('../controllers/gruposController')
 const meetiController = require('../controllers/meetiController')
 const meetiControllerFE = require('../controllers/frontend/meetiControllerFE')
+const usuariosControllerFe = require('../controllers/frontend/usuariosControllerFe')
+const gruposControllerFe = require('../controllers/frontend/gruposControllerFe')
 
 module.exports = function () {
     router.get('/', homeController.home)
@@ -23,6 +25,16 @@ module.exports = function () {
     // Muestra todos los asistencias
     router.get('/asistentes/:slug',
         meetiControllerFE.mostrarAsistentes
+    )
+
+    // Muestra perfiles en el frontend
+    router.get('/usuarios/:id',
+        usuariosControllerFe.mostrarUsuario
+    )
+
+    // Muestra los grupos en el front
+    router.get('/grupos/:id',
+        gruposControllerFe.mostrarGrupo
     )
 
     // Crear y confirmar cuentas

@@ -51,8 +51,10 @@
     <div class="contenedor">
         <div class="informacion-evento">
             <div class="descripcion">
-                <img src="/uploads/grupos/<%= meeti.grupo.imagen %>" alt="">
-                <%- meeti.descripcion %>
+                <% if(meeti.grupo.imagen){ %>
+                    <img src="/uploads/grupos/<%= meeti.grupo.imagen %>" alt="">
+                    <% } %>
+                        <%- meeti.descripcion %>
             </div>
             <div class="asistentes">
                 <div class="titulo">
