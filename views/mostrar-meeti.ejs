@@ -66,31 +66,54 @@
             </div>
             <div class="comentarios">
                 <h2>Comentarios</h2>
-                <div class="comentario">
-                    <div class="imagen"></div>
-                    <div class="texto">
-                        <p>Hola</p>
-                        <p>Escrito por: <span>Edson Felix</span></p>
-                        <input type="button" value="Eliminar" class="btn btn-azul">
-                    </div>
-                </div>
-                <div class="comentario">
-                    <div class="imagen"></div>
-                    <div class="texto">
-                        <p>Hola</p>
-                        <p>Escrito por: <span>Edson Felix</span></p>
-                    </div>
-                </div>
-                <form action="" class="default-form comentarios">
-                    <legend>Agrega un comentario</legend>
-                    <div class="campo">
-                        <label for="Comentario"></label>
-                        <textarea name="comentario"></textarea>
-                    </div>
-                    <div class="enviar">
-                        <input type="submit" value="Enviar" class="btn btn-rosa">
-                    </div>
-                </form>
+                <% if(comentarios.length>0){ %>
+                    <% comentarios.forEach(comentario=> { %>
+                        <div class="comentario">
+                            <div class="imagen">
+                                <% if(comentario.usuario.imagen){ %>
+                                    <img src="/uploads/perfiles/<%= comentario.usuario.imagen %>">
+                                    <% } %>
+                            </div>
+                            <div class="texto">
+                                <p>
+                                    <%= comentario.mensaje %>
+                                </p>
+                                <p>Escrito por:
+                                    <a href="/usuarios/<%= comentario.usuario.id %>">
+                                        <%= comentario.usuario.nombre%>
+                                    </a>
+                                <p>
+                                    <% if(comentario.usuarioId===usuario.id || meeti.usuario.id===usuario.id){ %>
+                                        <form action="/eliminar-comentario" method="post" class="eliminar-comentario">
+                                            <input type="hidden" name="idComentario" value="<%= comentario.id %>">
+                                            <input type="submit" value="Eliminar" class="btn btn-azul">
+                                        </form>
+
+                                        <% } %>
+                            </div>
+                        </div>
+                        <% }) %>
+                            <% } else { %>
+                                <p>No hay comentarios aún</p>
+                                <% } %>
+
+                                    <% if(usuario.id){ %>
+                                        <form action="/meeti/<%= meeti.id %>" method="post"
+                                            class="default-form comentarios">
+                                            <legend>Agrega un comentario</legend>
+                                            <div class="campo">
+                                                <label for="Comentario"></label>
+                                                <textarea name="comentario"></textarea>
+                                            </div>
+                                            <div class="enviar">
+                                                <input type="submit" value="Enviar" class="btn btn-rosa">
+                                            </div>
+                                        </form>
+                                        <% } else { %>
+                                            <a href="/iniciar-sesion">
+                                                <p>Inicia Sesion para Agregar un Comentario</p>
+                                            </a>
+                                            <% } %>
             </div>
         </div>
 
