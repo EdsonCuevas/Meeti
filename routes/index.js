@@ -37,6 +37,11 @@ module.exports = function () {
         gruposControllerFe.mostrarGrupo
     )
 
+    // Muestra las categorias
+    router.get('/categoria/:slug',
+        meetiControllerFE.mostrarCategoria
+    )
+
     // Crear y confirmar cuentas
     router.get('/crear-cuenta', usuariosController.formCrearCuenta)
     router.post('/crear-cuenta', usuariosController.crearNuevaCuenta)
