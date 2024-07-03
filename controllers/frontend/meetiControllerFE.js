@@ -5,6 +5,7 @@ const Sequelize = require('sequelize')
 const Categorias = require('../../models/Categorias')
 const Comentarios = require('../../models/Comentarios')
 const moment = require('moment')
+const Op = Sequelize.Op
 
 exports.mostrarMeeti = async (req, res) => {
     const meeti = await Meeti.findOne({ where: { slug: req.params.slug }, include: [{ model: Grupos }, { model: Usuarios, atrributes: ['id', 'nombre', 'imagen'] }] })
@@ -12,6 +13,22 @@ exports.mostrarMeeti = async (req, res) => {
     if (!meeti) {
         res.redirect('/')
     }
+
+    // Consultar por meetis cercanos
+    const ubicacion = Sequelize.literal(`ST_GeomFromText( 'POINT( ${meeti.ubicacion.coordinates[0]} ${meeti.ubicacion.coordinates[1]} )' )`)
+
+    // ST_DISTANCE_Sphere = Retorna una linea en metros
+    const distancia = Sequelize.fn('ST_DistanceSphere', Sequelize.col('ubicacion'), ubicacion);
+
+
+    // Encontrar meetis cercanos
+    const cercanos = await Meeti.findAll({
+        order: distancia, // Los ordena del mas cercano al mas lejano
+        where: Sequelize.where(distancia, { [Op.lte]: 2000 }), // 2000 metros o 2km
+        limit: 3,
+        offset: 1,
+        include: [{ model: Grupos }, { model: Usuarios, atrributes: ['id', 'nombre', 'imagen'] }]
+    })
 
     // Consultar despues de verificar que existe el meeti
     const comentarios = await Comentarios.findAll({
@@ -27,6 +44,7 @@ exports.mostrarMeeti = async (req, res) => {
         nombrePagina: meeti.titulo,
         meeti,
         comentarios,
+        cercanos,
         moment
     })
 }
